@@ -21,6 +21,7 @@ class ExampleException {
   public const EXECUTE_COMMAND_2 = 562;
   public const EXECUTE_QUERY_1 = 571;
   public const EXECUTE_QUERY_2 = 572;
+  // Error code matches HTTP response code.
   public function __construct($type = self::NONE) {
     switch ($type) {
       case 551:
