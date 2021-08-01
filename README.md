@@ -31,7 +31,7 @@ $ docker exec example.com /bin/bash -c 'chown -Rh nginx:nginx /srv/www/example/'
 [after]  127.0.0.1 localhost example.com
 ```
 
-6. Use a web browser to access the application.
+6. Use a web browser to access the application. User name and password are *demo*.
 ```
 http://example.com
 ```
