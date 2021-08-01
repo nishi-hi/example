@@ -5,6 +5,7 @@ require_once('util.php');
 // define('ENV', 'production');
 define('ENV', 'staging');
 
+// When include from cleaner.php, this statement is not needed.
 if (isset($_SERVER['HTTP_HOST'])) {
 
   $server_define = function($key) {
@@ -21,9 +22,9 @@ if (isset($_SERVER['HTTP_HOST'])) {
 
   array_map($server_define, ['CONTEXT_PREFIX', 'REQUEST_METHOD', 'REQUEST_SCHEME', 'REQUEST_URI', 'HTTP_HOST']);
 
-  $url = ['HOME' => '/', 'LOGIN_HOME' => '/login', 'JOB_HOME' => '/job', 'JOB_LIST' => '/job/list', 'JOB_RESULT' => '/job/result', 'JOB_REPORT' => '/job/report'];
+  $url = ['HOME' => '/', 'LOGIN_HOME' => '/login', 'JOB_HOME' => '/job', 'JOB_LIST' => '/job/list', 'JOB_RESULT' => '/job/result'];
   $action_url = ['LOGIN_VERIFY' => '/login/verify', 'LOGOUT' => '/logout', 'JOB_SUBMIT' => '/job/submit'];
-  $ajax_url = ['QSUB' => '/ajax/qsub', 'QREPORT' => '/ajax/qreport'];
+  $ajax_url = ['SUBMIT' => '/ajax/submit'];
 
   if (is_null(CONTEXT_PREFIX)) {
     define('URL', $url);
