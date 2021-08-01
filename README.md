@@ -21,7 +21,7 @@ $ bash run.sh
 
 4. Change the owner and group of application data uniformly.
 ```
-$ docker exec example.com "chown -Rh nginx:nginx /srv/www/example/"
+$ docker exec example.com /bin/bash -c 'chown -Rh nginx:nginx /srv/www/example/'
 ```
 
 5. Change hosts file to access the application as FQDN.
