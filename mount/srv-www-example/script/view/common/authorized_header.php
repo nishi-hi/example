@@ -24,6 +24,7 @@ $menu_logout->text = 'Logout';
 $menu_logout->href = ACTION_URL['LOGOUT'];
 $mobile_menus = [ $menu_top, $menu_run_job, $menu_list_job, $menu_logout ];
 $desktop_menus = [ $menu_top, $menu_run_job, $menu_list_job ];
+// If current URL is one of the menus, change font color black.
 if ($this->url === URL['HOME']){
   $mobile_menus[0]->color = 'black';  $desktop_menus[0]->color = 'black';
 } else if ($this->url === URL['JOB_HOME']) {
