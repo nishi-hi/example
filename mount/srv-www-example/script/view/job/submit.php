@@ -14,7 +14,7 @@ const jobSubmitResult = document.getElementById('job_submit_result');
 
 (function() {
   let httpRequest = new XMLHttpRequest();
-  makeRequest('<?php echo AJAX_URL["QSUB"]; ?>', '<?php echo $input_file_name; ?>');
+  makeRequest('<?php echo AJAX_URL["SUBMIT"]; ?>', '<?php echo $input_file_name; ?>');
 
   function makeRequest(url, inputFileName) {
     httpRequest = new XMLHttpRequest();
