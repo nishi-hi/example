@@ -8,6 +8,7 @@ class Model {
 
   public function __construct() {
     session_set_save_handler(new MySessionHandler(SESSION_DB_FILE), true);
+    // This line is for HTTPS environment.
     //session_start(['use_strict_mode' => true, 'cookie_httponly' => true, 'cookie_secure' => true, 'sid_length' => '48', 'sid_bits_per_character' => '6', 'gc_maxlifetime' => MAXLIFETIME]);
     session_start(['use_strict_mode' => true, 'cookie_httponly' => true, 'sid_length' => '48', 'sid_bits_per_character' => '6', 'gc_maxlifetime' => MAXLIFETIME]);
     session_regenerate_id(true);
@@ -37,6 +38,7 @@ class Model {
   }
 
   public function set_session_updated() {
+    // Store access time in UNIX timestamp.
     $_SESSION['updated'] = time();
   }
 
@@ -83,8 +85,11 @@ class Model {
   }
 
   public function check_page_permission($method) {
+    // Acceptable request method is only one.
     if (REQUEST_METHOD !== $method) $this->redirect(URL['HOME']);
+    // Already logged in?
     if (! $this->is_login()) $this->redirect(URL['LOGIN_HOME']);
+    // Is the session still alive?
     if (! $this->is_session_alive()) $this->redirect(URL['LOGIN_HOME'], 'session_timeout=1');
     $this->set_session_referer();
     $this->set_session_updated();
@@ -126,6 +131,7 @@ class Model {
   }
 
   private function examine_input_file($input_file_path) {
+    // Whether the type of an image is IMAGETYPE_PNG (3)?
     if (exif_imagetype($input_file_path) != IMAGETYPE_PNG) return false;
     return true;
   }
@@ -137,8 +143,11 @@ class Model {
       $output = [];
       $retval = null;
       $job_id = time();
+      // sleep command is for visualizing AJAX behavior.
       exec("/usr/bin/timeout 5 /bin/bash -c 'sleep 2 && exiftool -j ".$input_file_path." 1> ".JOB_RESULT_DIR.'/'.$job_id.'.json'."'", $output, $retval);
+      // No error is supposed.
       if ($retval !== 0) throw new ExampleException(ExampleException::EXECUTE_COMMAND_1);
+      // No standard output is supposed.
       if (count($output) !== 0) throw new ExampleException(ExampleException::EXECUTE_COMMAND_2);
     } catch (Exception $e) {
       $this->send_error_header($e, true);
@@ -156,6 +165,7 @@ class Model {
     }
   }
 
+  // This function is efficient in the case of using the job scheduler.
   public function update_job_finished() {
     try {
       $db = new SQLite3(DB_FILE, SQLITE3_OPEN_READWRITE);
@@ -209,6 +219,7 @@ class Model {
     }
   }
 
+  // This function forces an user to check their job results only.
   public function check_job_permission($job_id) {
     try {
       $db = new SQLite3(DB_FILE, SQLITE3_OPEN_READONLY);
@@ -237,6 +248,7 @@ class Model {
   public function make_thumbnail($input_file_name) {
     $output = [];
     $retval = null;
+    // Thumbnail width is 100px.
     exec('gm convert -thumbnail 100 '.JOB_INPUT_DIR.'/'.$input_file_name.' '.THUMBNAIL_DIR.'/'.$input_file_name, $output, $retval);
     if ($retval !== 0) return false;
     if (count($output) !== 0) return false;
