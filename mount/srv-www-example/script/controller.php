@@ -10,6 +10,7 @@ class Controller {
 
   public function __construct() {
     $this->model = new Model();
+    // e.g. /login?login_failed=1 to /login
     $this->url = $this->model->trim_query_string(REQUEST_URI);
   }
 
@@ -48,12 +49,12 @@ class Controller {
       $input_file_name = $this->model->put_input_file();
       include_once('view/job/submit.php');
       break;
-    case AJAX_URL['QSUB']:
+    case AJAX_URL['SUBMIT']:
       if ($_SESSION['referer'] !== ACTION_URL['JOB_SUBMIT']) $this->model->redirect(URL['HOME']);
       $this->model->check_page_permission('POST');
       $input_file_name = $_POST['input_file_name'];
       $job_id = $this->model->submit_job($input_file_name);
-      include_once('ajax/qsub.php');
+      include_once('ajax/submit.php');
       break;
     case URL['JOB_LIST']:
       $this->model->check_page_permission('GET');
