@@ -3,6 +3,7 @@ class Util {
 
   public function __constractor() { }
 
+  // This function receives string such as '1M', then returns integer 1048576.
   public static function to_bytes($str) {
     $size = preg_replace('/ /', '', $str);  
     $value = substr($size, 0, -1);
