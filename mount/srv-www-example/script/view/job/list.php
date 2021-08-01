@@ -1,5 +1,6 @@
 <?php
 require_once('Pager.php');
+// Pager parameters
 $params = [ 'itemData' => $job_list, 'perPage' => 20, 'delta' => 5, 'mode' => 'Jumping', 'clearIfVoid' => true,
             'path' => URL['JOB_HOME'], 'fileName' => 'list', 'fixFileName' => false, 'append' => true, 'urlVar' => 'page_id', 
             'linkClass' => 'text-decoration-none blue', 'curPageLinkClassName' => 'text-decoration-none black',
